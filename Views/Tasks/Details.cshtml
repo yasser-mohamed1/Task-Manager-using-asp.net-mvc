@@ -90,7 +90,7 @@
                         </div>
                         <div class="col-sm-9">
                             @Model.DueDate.Value.ToString("MMMM dd, yyyy 'at' HH:mm")
-                            @if (Model.DueDate < DateTime.UtcNow && !Model.IsCompleted)
+                            @if (Model.DueDate < DateTime.Now && !Model.IsCompleted)
                             {
                                 <span class="badge bg-danger ms-2">Overdue</span>
                             }
@@ -106,6 +106,10 @@
                         @if (Model.IsCompleted)
                         {
                             <span class="badge bg-success">Completed</span>
+                        }
+                        else if(Model.DueDate < DateTime.Now)
+                        {
+                            <span class="badge bg-danger">Overdue</span>
                         }
                         else
                         {

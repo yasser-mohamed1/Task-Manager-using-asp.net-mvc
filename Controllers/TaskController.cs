@@ -7,6 +7,7 @@ using TaskManager.Services;
 
 namespace TaskManager.Controllers
 {
+    [Authorize]
     public class TasksController : Controller
     {
         private readonly ITaskService _taskService;

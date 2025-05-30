@@ -69,7 +69,7 @@
                             <small class="text-muted d-block mb-2">
                                 <i class="bi bi-calendar"></i>
                                 Due: @task.DueDate.Value.ToString("MMM dd, yyyy HH:mm")
-                                @if (task.DueDate < DateTime.UtcNow && !task.IsCompleted)
+                                @if (task.DueDate < DateTime.Now && !task.IsCompleted)
                                 {
                                     <span class="text-danger">(Overdue)</span>
                                 }

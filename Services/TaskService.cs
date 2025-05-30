@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 using TaskManager.Data;
 using TaskManager.Models;
 
@@ -84,13 +85,13 @@ namespace TaskManager.Services
         public async Task<DashboardViewModel> GetDashboardDataAsync(string userId)
         {
             var tasks = await GetUserTasksAsync(userId);
-            var now = DateTime.UtcNow;
+            var now = DateTime.Now;
 
             return new DashboardViewModel
             {
                 TotalTasks = tasks.Count,
                 CompletedTasks = tasks.Count(t => t.IsCompleted),
-                PendingTasks = tasks.Count(t => !t.IsCompleted),
+                PendingTasks = tasks.Count(t => !t.IsCompleted && t.DueDate >= now),
                 OverdueTasks = tasks.Count(t => !t.IsCompleted && t.DueDate < now),
                 RecentTasks = tasks.Take(5).ToList(),
                 UpcomingTasks = tasks
@@ -99,6 +100,7 @@ namespace TaskManager.Services
                     .Take(5)
                     .ToList()
             };
+
         }
 
         public async Task<List<Category>> GetCategoriesAsync()
