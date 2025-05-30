@@ -1,0 +1,157 @@
+﻿@model TaskManager.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="row">
+    <div class="col-12">
+        <h1 class="display-4">Welcome to Task Manager</h1>
+        <p class="lead">Stay organized and boost your productivity!</p>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>@Model.TotalTasks</h4>
+                        <span>Total Tasks</span>
+                    </div>
+                    <i class="bi bi-list-task fs-1"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>@Model.CompletedTasks</h4>
+                        <span>Completed</span>
+                    </div>
+                    <i class="bi bi-check-circle fs-1"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>@Model.PendingTasks</h4>
+                        <span>Pending</span>
+                    </div>
+                    <i class="bi bi-clock fs-1"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="card bg-danger text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>@Model.OverdueTasks</h4>
+                        <span>Overdue</span>
+                    </div>
+                    <i class="bi bi-exclamation-triangle fs-1"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-clock-history"></i> Recent Tasks</h5>
+            </div>
+            <div class="card-body">
+                @if (Model.RecentTasks.Any())
+                {
+                    @foreach (var task in Model.RecentTasks)
+                    {
+                        <div class="d-flex justify-content-between align-items-center mb-2 p-2 border-bottom">
+                            <div>
+                                <h6 class="mb-1 @(task.IsCompleted ? "text-decoration-line-through text-muted" : "")">
+                                    @task.Title
+                                </h6>
+                                <small class="text-muted">
+                                    Created: @task.CreatedAt.ToString("MMM dd, yyyy")
+                                </small>
+                            </div>
+                            <span class="badge bg-@(GetPriorityColor(task.Priority))">
+                                @task.Priority
+                            </span>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="text-muted">No tasks yet. <a asp-controller="Tasks" asp-action="Create">Create your first task!</a></p>
+                }
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5><i class="bi bi-calendar-event"></i> Upcoming Tasks</h5>
+            </div>
+            <div class="card-body">
+                @if (Model.UpcomingTasks.Any())
+                {
+                    @foreach (var task in Model.UpcomingTasks)
+                    {
+                        <div class="d-flex justify-content-between align-items-center mb-2 p-2 border-bottom">
+                            <div>
+                                <h6 class="mb-1">@task.Title</h6>
+                                <small class="text-muted">
+                                    Due: @task.DueDate?.ToString("MMM dd, yyyy HH:mm")
+                                </small>
+                            </div>
+                            <span class="badge bg-@(GetPriorityColor(task.Priority))">
+                                @task.Priority
+                            </span>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p class="text-muted">No upcoming tasks with due dates.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12 text-center">
+        <a asp-controller="Tasks" asp-action="Create" class="btn btn-primary btn-lg">
+            <i class="bi bi-plus-circle"></i> Create New Task
+        </a>
+    </div>
+</div>
+
+@functions {
+    private string GetPriorityColor(TaskManager.Models.TaskPriority priority)
+    {
+        return priority switch
+        {
+            TaskManager.Models.TaskPriority.Low => "secondary",
+            TaskManager.Models.TaskPriority.Medium => "info",
+            TaskManager.Models.TaskPriority.High => "warning",
+            TaskManager.Models.TaskPriority.Critical => "danger",
+            _ => "secondary"
+        };
+    }
+}
