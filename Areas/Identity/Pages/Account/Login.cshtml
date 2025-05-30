@@ -1,0 +1,172 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="row w-100 justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-body p-4 p-md-5">
+                    <!-- Header Section -->
+                    <div class="text-center mb-4">
+                        <h1 class="card-title h3 fw-bold text-primary mb-2">Welcome Back</h1>
+                        <p class="text-muted">Sign in to your account to continue</p>
+                    </div>
+
+                    <div class="row g-4">
+                        <!-- Login Form Section -->
+                        <div class="col-lg-6">
+                            <div class="pe-lg-3">
+                                <h5 class="fw-semibold mb-3 text-dark">
+                                    <i class="bi bi-person-circle me-2"></i>Local Account
+                                </h5>
+
+                                <form id="account" method="post">
+                                    <div asp-validation-summary="ModelOnly" class="alert alert-danger d-flex align-items-center" role="alert">
+                                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                        <div></div>
+                                    </div>
+
+                                    <!-- Email Input -->
+                                    <div class="form-floating mb-3">
+                                        <input asp-for="Input.Email"
+                                               class="form-control form-control-lg border-0 shadow-sm"
+                                               autocomplete="username"
+                                               aria-required="true"
+                                               placeholder="name@example.com"
+                                               style="background-color: #f8f9fa;" />
+                                        <label asp-for="Input.Email" class="text-muted">
+                                            <i class="bi bi-envelope me-1"></i>Email Address
+                                        </label>
+                                        <span asp-validation-for="Input.Email" class="text-danger small"></span>
+                                    </div>
+
+                                    <!-- Password Input -->
+                                    <div class="form-floating mb-3">
+                                        <input asp-for="Input.Password"
+                                               class="form-control form-control-lg border-0 shadow-sm"
+                                               autocomplete="current-password"
+                                               aria-required="true"
+                                               placeholder="password"
+                                               style="background-color: #f8f9fa;" />
+                                        <label asp-for="Input.Password" class="text-muted">
+                                            <i class="bi bi-lock me-1"></i>Password
+                                        </label>
+                                        <span asp-validation-for="Input.Password" class="text-danger small"></span>
+                                    </div>
+
+                                    <!-- Remember Me Checkbox -->
+                                    <div class="form-check mb-4">
+                                        <input class="form-check-input" asp-for="Input.RememberMe" id="rememberMe" />
+                                        <label class="form-check-label text-muted" for="rememberMe">
+                                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                        </label>
+                                    </div>
+
+                                    <!-- Login Button -->
+                                    <div class="d-grid mb-4">
+                                        <button id="login-submit" type="submit" class="btn btn-primary btn-lg py-3 fw-semibold shadow-sm">
+                                            <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+                                        </button>
+                                    </div>
+
+                                    <!-- Additional Links -->
+                                    <div class="text-center">
+                                        <div class="mb-2">
+                                            <a id="forgot-password" asp-page="./ForgotPassword" class="text-decoration-none">
+                                                <i class="bi bi-question-circle me-1"></i>Forgot your password?
+                                            </a>
+                                        </div>
+                                        <div class="mb-2">
+                                            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="text-decoration-none">
+                                                <i class="bi bi-person-plus me-1"></i>Create new account
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <a id="resend-confirmation" asp-page="./ResendEmailConfirmation" class="text-decoration-none small">
+                                                <i class="bi bi-envelope-check me-1"></i>Resend email confirmation
+                                            </a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- External Login Section -->
+                        <div class="col-lg-6">
+                            <div class="ps-lg-3">
+                                <!-- Divider for mobile -->
+@*                                 <div class="d-lg-none">
+                                    <hr class="my-4">
+                                    <div class="text-center mb-3">
+                                        <span class="px-3 text-muted small">OR</span>
+                                    </div>
+                                </div>
+
+                                <!-- Vertical Divider for desktop -->
+                                <div class="d-none d-lg-block position-relative">
+                                    <div class="position-absolute top-0 start-0 h-100 border-start border-2 border-light"></div>
+                                    <div class="position-absolute top-50 start-0 translate-middle-y bg-white px-2">
+                                        <span class="text-muted small fw-semibold">OR</span>
+                                    </div>
+                                </div>
+ *@
+                                <h5 class="fw-semibold mb-3 text-dark ps-lg-4">
+                                    <i class="bi bi-globe me-2"></i>External Services
+                                </h5>
+
+                                <div class="ps-lg-4">
+                                    @{
+                                        if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                                        {
+                                            <div class="alert alert-info border-0" style="background-color: #e3f2fd;">
+                                                <div class="d-flex align-items-start">
+                                                    <i class="bi bi-info-circle-fill me-2 mt-1 text-info"></i>
+                                                    <div>
+                                                        <p class="mb-2 fw-semibold">No External Services</p>
+                                                        <p class="mb-0 small">
+                                                            External authentication services are not configured.
+                                                            <a href="https://go.microsoft.com/fwlink/?LinkID=532715"
+                                                               class="text-decoration-none" target="_blank">
+                                                                Learn how to set them up
+                                                                <i class="bi bi-arrow-up-right-square ms-1"></i>
+                                                            </a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                                                <div class="d-grid gap-2">
+                                                    @foreach (var provider in Model.ExternalLogins!)
+                                                    {
+                                                        <button type="submit"
+                                                                class="btn btn-outline-secondary btn-lg py-3 d-flex align-items-center justify-content-center"
+                                                                name="provider"
+                                                                value="@provider.Name"
+                                                                title="Log in using your @provider.DisplayName account">
+                                                            <i class="bi bi-@provider.Name.ToLower() me-2"></i>
+                                                            Continue with @provider.DisplayName
+                                                        </button>
+                                                    }
+                                                </div>
+                                            </form>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

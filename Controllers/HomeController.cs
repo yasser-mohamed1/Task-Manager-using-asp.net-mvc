@@ -6,7 +6,7 @@ using TaskManager.Models;
 using TaskManager.Services;
 
 namespace TaskManager.Controllers;
-
+[Authorize]
 public class HomeController : Controller
 {
     private readonly ITaskService _taskService;
