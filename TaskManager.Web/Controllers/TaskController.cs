@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
+using TaskManager.BLL.Interfaces;
 using TaskManager.Models;
-using TaskManager.Services;
 
 namespace TaskManager.Controllers
 {

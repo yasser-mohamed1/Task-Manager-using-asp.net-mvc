@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using TaskManager.BLL.Interfaces;
 using TaskManager.Data;
 using TaskManager.Models;
 using TaskManager.Services;

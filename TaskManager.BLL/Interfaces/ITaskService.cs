@@ -1,6 +1,6 @@
 ﻿using TaskManager.Models;
 
-namespace TaskManager.Services
+namespace TaskManager.BLL.Interfaces
 {
     public interface ITaskService
     {

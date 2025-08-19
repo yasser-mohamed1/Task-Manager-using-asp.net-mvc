@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using TaskManager.Models;
-using TaskManager.Services;
+using TaskManager.BLL.Interfaces;
 
 namespace TaskManager.Controllers;
 [Authorize]
